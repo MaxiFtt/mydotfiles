@@ -30,9 +30,11 @@ from libqtile import bar, layout, widget
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
+
 mod = "mod4"
 terminal = guess_terminal()
-
+#scrot
+scrot_path="~/Photos/scrot/"
 keys = [
     # Switch between windows
     Key([mod], "h", lazy.layout.left(), desc="Move focus to left"),
@@ -70,7 +72,6 @@ keys = [
     Key([mod, "shift"], "Return", lazy.layout.toggle_split(),
         desc="Toggle between split and unsplit sides of stack"),
     Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
-    Key([mod], "b", lazy.spawn("brave"), desc="browser"),
 
     # Toggle between different layouts as defined below
     Key([mod], "space", lazy.next_layout(), desc="Toggle between layouts"),
@@ -78,8 +79,10 @@ keys = [
     Key([mod], "f",lazy.window.toggle_fullscreen(),desc='toggle fullscreen'),
     Key([mod, "control"], "r", lazy.restart(), desc="Restart Qtile"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
-    Key([mod], "r", lazy.spawncmd(),
-        desc="Spawn a command using a prompt widget"),
+    #custom commands
+    Key([mod], "r",lazy.spawn("rofi -show drun"),desc="rofi shows .desktop files"),
+    Key([mod, "control"], "x", lazy.spawn("shutdown now"), desc="Shutdown computer"),
+    Key([mod], "b", lazy.spawn("brave"), desc="browser"),
 ]
 colors = [["#4d5770", "#4d5770"], # panel background
           ["#c68e7c", "#c68e7c"], # background for current screen tab
@@ -95,7 +98,8 @@ groups = [Group("DEV", layout='columns'),
           Group("WWW", layout='columns'),
           Group("SYS", layout='columns'),
           Group("CHAT",layout="columns"),
-          Group("GDE",layout="columns"),]
+          Group("GDE",layout="columns"),
+          Group("GAMES",layout="columns"),]
                                  
 from libqtile.dgroups import simple_key_binder
 dgroups_key_binder = simple_key_binder("mod4")
@@ -111,12 +115,17 @@ layouts = [
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
     # layout.Bsp(),
-    layout.Matrix(border_focus="#D6573C", border_normal="#7a4a24",columns=2,border_width=4,margin=4),
+    #layout.Matrix(border_focus="#D6573C", border_normal="#7a4a24",columns=2,border_width=4,margin=4),
     #layout.MonadTall(),
     # layout.MonadWide(),
-    # layout.RatioTile(),
+    layout.RatioTile(border_focus="#D6573C",border_normal="#7a4a24",border_width=4,margin=4),
     # layout.Tile(),
-    # layout.TreeTab(),
+     layout.TreeTab(
+         border_focus="#D6573C",
+         border_normal="#7a4a24",
+         active_bg="#c68e7c" ,
+         bg_color="#4d5770" ,
+         margin=4),
      layout.VerticalTile(border_focus="#D6573C", border_normal="#7a4a24",border_width=4,margin=4),
     # layout.Zoomy(),
 ]
@@ -136,9 +145,6 @@ screens = [
         wallpaper_mode="fill",
         top=bar.Bar(
             [
-                widget.CurrentLayout(
-                    background = colors[0]
-                    ),
                 widget.GroupBox(
                     background = colors[0],
                     foreground = colors[2],
@@ -156,10 +162,24 @@ screens = [
                     },
                     name_transform=lambda name: name.upper(),
                 ),
-                widget.Clock(format='%Y-%m-%d %a %I:%M %p',background = colors[0]),
-                widget.QuickExit(background = colors[3]),
+                widget.CryptoTicker(background = colors[0],update_interval = 1800),
+                widget.Sep(background = colors[0],foreground = colors[3],linewidth=2),
+                widget.CurrentLayout(background = colors[0]),
+                widget.Sep(background = colors[0],foreground = colors[3],linewidth=2),
+                widget.CPU(background = colors[0]),
+                widget.Sep(background = colors[0],foreground = colors[3],linewidth=2),
+                widget.Battery(background= colors[0]),
+                widget.Sep(background = colors[0],foreground = colors[3],linewidth=2),
+                widget.CheckUpdates(
+                    background= colors[0],
+                    colour_have_updates="#6ef45f",
+                    colour_no_updates="#ffffff",
+                    no_update_string="UP TO DATE"),
+                widget.Sep(background = colors[0],foreground = colors[3],linewidth=2),
+                widget.Clock(format='%d/%m/%Y%a %I:%M %p',background = colors[0]),
+                widget.QuickExit(background = colors[3],default_text="[ I / O ]",countdown_start=3,countdown_format="[{} sec]"),
             ],
-            24,
+            28,
         ),
     ),
 ]
