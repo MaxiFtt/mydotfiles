@@ -83,8 +83,10 @@ keys = [
     Key([mod], "r",lazy.spawn("rofi -show drun"),desc="rofi shows .desktop files"),
     Key([mod, "control"], "x", lazy.spawn("shutdown now"), desc="Shutdown computer"),
     Key([mod], "b", lazy.spawn("brave"), desc="browser"),
+    Key([mod, "shift"], "s", lazy.spawn("scrot -s /home/maxif/Photos/scrot/'%Y-%m-%d_$wx$h.jpg'")),
+    Key([mod, "shift"], "p", lazy.spawn("scrot /home/maxif/Photos/scrot/'%Y-%m-%d_$wx$h.jpg'")),
 ]
-colors = [["#4d5770", "#4d5770"], # panel background
+colors = [["#312d3f", "#312d3f"], # panel background
           ["#c68e7c", "#c68e7c"], # background for current screen tab
           ["#ffffff", "#ffffff"], # font color for group names
           ["#f55f5f", "#f55f5f"], # border line color for current tab f55f5f 
@@ -111,22 +113,22 @@ layout_theme = {"border_width": 2,
 
 layouts = [
     layout.Columns(border_focus="#D6573C", border_normal="#7a4a24", border_width=4,margin=4),
-    #layout.Max(),
+    layout.Max(),
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
     # layout.Bsp(),
     #layout.Matrix(border_focus="#D6573C", border_normal="#7a4a24",columns=2,border_width=4,margin=4),
     #layout.MonadTall(),
     # layout.MonadWide(),
-    layout.RatioTile(border_focus="#D6573C",border_normal="#7a4a24",border_width=4,margin=4),
+    layout.RatioTile(border_focus="#903bd6",border_normal="#5d247a",border_width=4,margin=4),
     # layout.Tile(),
-     layout.TreeTab(
-         border_focus="#D6573C",
-         border_normal="#7a4a24",
-         active_bg="#c68e7c" ,
-         bg_color="#4d5770" ,
-         margin=4),
-     layout.VerticalTile(border_focus="#D6573C", border_normal="#7a4a24",border_width=4,margin=4),
+    # layout.TreeTab(
+    #     border_focus="#D6573C",
+    #     border_normal="#7a4a24",
+    #     active_bg="#c68e7c" ,
+    #     bg_color="#312d3f" ,
+    #    margin=4),
+     layout.VerticalTile(border_focus="#90d63b", border_normal="#3f701f",border_width=4,margin=4),
     # layout.Zoomy(),
 ]
 
@@ -141,7 +143,7 @@ extension_defaults = widget_defaults.copy()
 
 screens = [
     Screen(
-        wallpaper='/home/maxif/.config/backgrounds/Montana-Sunrise-50-States.jpg',
+        wallpaper='/home/maxif/.config/backgrounds/monaco_summer_sunrise.jpg',
         wallpaper_mode="fill",
         top=bar.Bar(
             [
@@ -162,22 +164,22 @@ screens = [
                     },
                     name_transform=lambda name: name.upper(),
                 ),
-                widget.CryptoTicker(background = colors[0],update_interval = 1800),
-                widget.Sep(background = colors[0],foreground = colors[3],linewidth=2),
-                widget.CurrentLayout(background = colors[0]),
-                widget.Sep(background = colors[0],foreground = colors[3],linewidth=2),
-                widget.CPU(background = colors[0]),
-                widget.Sep(background = colors[0],foreground = colors[3],linewidth=2),
-                widget.Battery(background= colors[0]),
-                widget.Sep(background = colors[0],foreground = colors[3],linewidth=2),
+                widget.CryptoTicker(background = colors[0],foreground="#f9bc02",update_interval = 1800),
+                widget.Sep(background = colors[0],foreground = "#8545d8",linewidth=2),
+                widget.CurrentLayout(background = colors[0],foreground="#0484ce"),
+                widget.Sep(background = colors[0],foreground = "#8545d8",linewidth=2),
+                widget.CPU(background = colors[0],foreground="d84404"),
+                widget.Sep(background = colors[0],foreground = "#8545d8",linewidth=2),
+                widget.Battery(background= colors[0],foreground="#add802"),
+                widget.Sep(background = colors[0],foreground = "#8545d8",linewidth=2),
                 widget.CheckUpdates(
                     background= colors[0],
                     colour_have_updates="#6ef45f",
-                    colour_no_updates="#ffffff",
+                    colour_no_updates="#0ad39a",
                     no_update_string="UP TO DATE"),
-                widget.Sep(background = colors[0],foreground = colors[3],linewidth=2),
-                widget.Clock(format='%d/%m/%Y%a %I:%M %p',background = colors[0]),
-                widget.QuickExit(background = colors[3],default_text="[ I / O ]",countdown_start=3,countdown_format="[{} sec]"),
+                widget.Sep(background = colors[0],foreground = "#8545d8",linewidth=2),
+                widget.Clock(format='%d/%m/%Y %a %I:%M %p',background = colors[0],foreground="#2caa30"),
+                #widget.QuickExit(background = colors[3],default_text="[ I / O ]",countdown_start=3,countdown_format="[{} sec]"),
             ],
             28,
         ),
