@@ -101,18 +101,19 @@ groups = [Group("DEV", layout='columns'),
           Group("SYS", layout='columns'),
           Group("CHAT",layout="columns"),
           Group("GDE",layout="columns"),
-          Group("GAMES",layout="columns"),]
+          Group("GAMES",layout="max"),]
                                  
 from libqtile.dgroups import simple_key_binder
 dgroups_key_binder = simple_key_binder("mod4")
-layout_theme = {"border_width": 2,
-    "margin": 8,
-    "border_focus": "e1acff",
-    "border_normal": "1D2330"
-}
 
+main_theme = {
+    "b_width": 4,
+    "margin": 4,
+    "background": "/home/maxif/.config/backgrounds/mountain_sunrise.jpg",
+    "bar_height": 28 
+}
 layouts = [
-    layout.Columns(border_focus="#D6573C", border_normal="#7a4a24", border_width=4,margin=4),
+    layout.Columns(border_focus="#D6573C", border_normal="#7a4a24", border_width= main_theme["b_width"],margin= main_theme["margin"]),
     layout.Max(),
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
@@ -120,7 +121,7 @@ layouts = [
     #layout.Matrix(border_focus="#D6573C", border_normal="#7a4a24",columns=2,border_width=4,margin=4),
     #layout.MonadTall(),
     # layout.MonadWide(),
-    layout.RatioTile(border_focus="#903bd6",border_normal="#5d247a",border_width=4,margin=4),
+    layout.RatioTile(border_focus="#903bd6",border_normal="#5d247a",border_width= main_theme["b_width"],margin= main_theme["margin"]),
     # layout.Tile(),
     # layout.TreeTab(
     #     border_focus="#D6573C",
@@ -128,7 +129,7 @@ layouts = [
     #     active_bg="#c68e7c" ,
     #     bg_color="#312d3f" ,
     #    margin=4),
-     layout.VerticalTile(border_focus="#90d63b", border_normal="#3f701f",border_width=4,margin=4),
+    layout.VerticalTile(border_focus="#90d63b", border_normal="#3f701f",border_width= main_theme["b_width"],margin= main_theme["margin"]),
     # layout.Zoomy(),
 ]
 
@@ -143,7 +144,7 @@ extension_defaults = widget_defaults.copy()
 
 screens = [
     Screen(
-        wallpaper='/home/maxif/.config/backgrounds/monaco_summer_sunrise.jpg',
+        wallpaper= main_theme["background"],
         wallpaper_mode="fill",
         top=bar.Bar(
             [
@@ -152,6 +153,7 @@ screens = [
                     foreground = colors[2],
                     block_highlight_text_color= colors[0],
                     highlight_method = "line",
+                    this_current_screen_border = colors[1],
                     highlight_color = colors[1],
                     inactive= colors[1]),
                 widget.Prompt(
@@ -181,7 +183,7 @@ screens = [
                 widget.Clock(format='%d/%m/%Y %a %I:%M %p',background = colors[0],foreground="#2caa30"),
                 #widget.QuickExit(background = colors[3],default_text="[ I / O ]",countdown_start=3,countdown_format="[{} sec]"),
             ],
-            28,
+            main_theme["bar_height"],margin= main_theme["margin"]
         ),
     ),
 ]

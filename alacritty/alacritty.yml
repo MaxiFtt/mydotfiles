@@ -6,4 +6,5 @@ window:
       x: 5
       y: 5
 dynamic_padding: false
-background_opacity: 0.8  # value range is 0 ~ 1
+window:
+  opacity: 0.8  # value range is 0 ~ 1
