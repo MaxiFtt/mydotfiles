@@ -1,10 +1,9 @@
 live_config_reload: true
 font:
   size: 13
-window:
-    padding:
-      x: 5
-      y: 5
 dynamic_padding: false
 window:
   opacity: 0.8  # value range is 0 ~ 1
+  padding:
+    x: 5
+    y: 5

@@ -82,6 +82,7 @@ keys = [
     #custom commands
     Key([mod], "r",lazy.spawn("rofi -show drun"),desc="rofi shows .desktop files"),
     Key([mod, "control"], "x", lazy.spawn("shutdown now"), desc="Shutdown computer"),
+    Key([mod, "control"], "z", lazy.spawn("slock"), desc="lock computer"),
     Key([mod], "b", lazy.spawn("brave"), desc="browser"),
     Key([mod, "shift"], "s", lazy.spawn("scrot -s /home/maxif/Photos/scrot/'%Y-%m-%d_$wx$h.jpg'")),
     Key([mod, "shift"], "p", lazy.spawn("scrot /home/maxif/Photos/scrot/'%Y-%m-%d_$wx$h.jpg'")),
@@ -96,12 +97,13 @@ colors = [["#312d3f", "#312d3f"], # panel background
           ["#D6573C","#B54D36"]] # border for screens
 
 from libqtile.config import Group, Match
-groups = [Group("DEV", layout='columns'),
-          Group("WWW", layout='columns'),
-          Group("SYS", layout='columns'),
-          Group("CHAT",layout="columns"),
-          Group("GDE",layout="columns"),
-          Group("GAMES",layout="max"),]
+groups = [Group("", layout='columns'),
+          Group("", layout='columns'),
+          Group("", layout='columns'),
+          Group("",layout="columns"),
+          Group("",layout="columns"),
+          Group("",layout="columns"),
+          Group("",layout="max"),]
                                  
 from libqtile.dgroups import simple_key_binder
 dgroups_key_binder = simple_key_binder("mod4")
@@ -109,8 +111,9 @@ dgroups_key_binder = simple_key_binder("mod4")
 main_theme = {
     "b_width": 4,
     "margin": 4,
-    "background": "/home/maxif/.config/backgrounds/mountain_sunrise.jpg",
-    "bar_height": 28 
+    "background": "/home/maxif/.config/backgrounds/water_huts.jpeg",
+    "bar_height": 28,
+    "font_size" : 14,
 }
 layouts = [
     layout.Columns(border_focus="#D6573C", border_normal="#7a4a24", border_width= main_theme["b_width"],margin= main_theme["margin"]),
@@ -151,39 +154,58 @@ screens = [
                 widget.GroupBox(
                     background = colors[0],
                     foreground = colors[2],
+                    fontsize = main_theme["font_size"],
                     block_highlight_text_color= colors[0],
                     highlight_method = "line",
                     this_current_screen_border = colors[1],
                     highlight_color = colors[1],
                     inactive= colors[1]),
                 widget.Prompt(
-                    background=colors[3]),
+                    background=colors[3],
+                    fontsize = main_theme["font_size"]),
                 widget.WindowName(
-                    background=colors[0]),
+                    background=colors[0],
+                    fontsize=main_theme["font_size"]),
                 widget.Chord(
                     chords_colors={
                         'launch': ("#ff0000", "#ffffff"),
                     },
                     name_transform=lambda name: name.upper(),
                 ),
-                widget.CryptoTicker(background = colors[0],foreground="#f9bc02",update_interval = 1800),
+                widget.CryptoTicker(background = colors[0],
+                                    foreground="#f9bc02",
+                                    fontsize=main_theme["font_size"],
+                                    format=" : {symbol}{amount:.2f}",
+                                    update_interval = 1800),
                 widget.Sep(background = colors[0],foreground = "#8545d8",linewidth=2),
-                widget.CurrentLayout(background = colors[0],foreground="#0484ce"),
+                widget.CurrentLayout(background = colors[0],fontsize=main_theme["font_size"],foreground="#0484ce"),
                 widget.Sep(background = colors[0],foreground = "#8545d8",linewidth=2),
-                widget.CPU(background = colors[0],foreground="d84404"),
+                widget.CPU(background = colors[0],
+                           foreground="d84404",
+                           fontsize=main_theme["font_size"],
+                           format=" {freq_current}GHz {load_percent}%"),
                 widget.Sep(background = colors[0],foreground = "#8545d8",linewidth=2),
-                widget.Battery(background= colors[0],foreground="#add802"),
+                widget.Battery(background= colors[0],fontsize=main_theme["font_size"],
+                               foreground="#add802",
+                               charge_char="",
+                               discharge_char="",
+                               unknown_char=""),
                 widget.Sep(background = colors[0],foreground = "#8545d8",linewidth=2),
                 widget.CheckUpdates(
                     background= colors[0],
+                    update_interval= 1800,
+                    fontsize=main_theme["font_size"],
+                    distro="Arch_checkupdates",
                     colour_have_updates="#6ef45f",
                     colour_no_updates="#0ad39a",
                     no_update_string="UP TO DATE"),
                 widget.Sep(background = colors[0],foreground = "#8545d8",linewidth=2),
-                widget.Clock(format='%d/%m/%Y %a %I:%M %p',background = colors[0],foreground="#2caa30"),
+                widget.Clock(format=' %d/%m/%Y %a %I:%M %p',fontsize=main_theme["font_size"],background = colors[0],foreground="#2caa30"),
                 #widget.QuickExit(background = colors[3],default_text="[ I / O ]",countdown_start=3,countdown_format="[{} sec]"),
             ],
-            main_theme["bar_height"],margin= main_theme["margin"]
+            main_theme["bar_height"],
+            margin= main_theme["margin"],
+            opacity = 1 
         ),
     ),
 ]
