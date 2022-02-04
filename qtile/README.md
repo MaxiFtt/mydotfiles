@@ -1,5 +1,5 @@
 # Qtile:
-![preview](https://github.com/MaxiFtt/mydotfiles/tree/main/qtile/preview.jpg "Preview")
+![preview](preview.jpg "Preview")
 ## config file requirements
 
 You can modify the config file according to your needs. However, if you don't want to change it, **you will need**:
