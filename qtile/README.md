@@ -12,10 +12,12 @@ You can modify the config file according to your needs. However, if you don't wa
 
 * [psutil](https://pypi.org/project/psutil/): the python module for the CPU widget
 
+* [slock](https://wiki.archlinux.org/title/Slock) to lock your screen
+
 ## Installing:
 
 ```bash
-    sudo pacman -Sy scrot rofi
+    sudo pacman -Sy scrot rofi slock
     paru brave-bin
     pip install psutil
 ```
