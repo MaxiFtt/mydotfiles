@@ -1,7 +1,13 @@
 if status is-interactive
     # Commands to run in interactive sessions can go here
+    pfetch
 end
-
+#fish aliases
+alias weather='curl wttr.in/Buenos_Aires'
+alias tetris='~/.scripts/tetris'
+alias upsys='sudo pacman -Syyu && flatpak update'
+alias seainst='~/.scripts/search_and_install.sh'
+alias ls='ls -lh --color=auto'
 set fish_greeting
 
 # name: sashimi
