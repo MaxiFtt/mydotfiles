@@ -69,9 +69,10 @@ keys = [
     # Split = all windows displayed
     # Unsplit = 1 window displayed, like Max layout, but still with
     # multiple stack panes
-    Key([mod, "shift"], "Return", lazy.layout.toggle_split(),
+    Key([mod], "Tab", lazy.layout.toggle_split(),
         desc="Toggle between split and unsplit sides of stack"),
     Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
+    # Key([mod, "shift"], "Return", lazy.spawn("alacritty -e vifm ~/ /"), desc="Launch vifm"),
 
     # Toggle between different layouts as defined below
     Key([mod], "space", lazy.next_layout(), desc="Toggle between layouts"),
@@ -87,8 +88,9 @@ keys = [
     Key([mod, "shift"], "s", lazy.spawn("scrot -s /home/maxif/Photos/scrot/'%Y-%m-%d_$wx$h.jpg'")),
     Key([mod, "shift"], "p", lazy.spawn("scrot /home/maxif/Photos/scrot/'%Y-%m-%d_$wx$h.jpg'")),
 ]
-colors = [["#312d3f", "#312d3f"], # panel background
-          ["#c68e7c", "#c68e7c"], # background for current screen tab
+#arc-dark
+colors = [["#383c4a", "#383c4a"], # panel background
+          ["#5294e2", "#5294e2"], # background for current screen tab
           ["#ffffff", "#ffffff"], # font color for group names
           ["#f55f5f", "#f55f5f"], # border line color for current tab f55f5f 
           ["#74438f", "#74438f"], # border line color for 'other tabs' and color for 'odd widgets'
@@ -109,15 +111,17 @@ from libqtile.dgroups import simple_key_binder
 dgroups_key_binder = simple_key_binder("mod4")
 
 main_theme = {
-    "b_width": 4,
+    "b_width": 3,
     "margin": 4,
-    "background": "/home/maxif/.config/backgrounds/water_huts.jpeg",
+    "bar_margin":0,
+    "background": "~/.config/backgrounds/rocks_landscape.jpg",
     "bar_height": 28,
     "font_size" : 14,
 }
 layouts = [
     layout.Columns(border_focus="#D6573C", border_normal="#7a4a24", border_width= main_theme["b_width"],margin= main_theme["margin"]),
     layout.Max(),
+    # layout.Floating(),
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
     # layout.Bsp(),
@@ -147,8 +151,8 @@ extension_defaults = widget_defaults.copy()
 
 screens = [
     Screen(
-        wallpaper= main_theme["background"],
-        wallpaper_mode="fill",
+        # wallpaper= main_theme["background"],
+        # wallpaper_mode="fill",
         top=bar.Bar(
             [
                 widget.GroupBox(
@@ -156,7 +160,9 @@ screens = [
                     foreground = colors[2],
                     fontsize = main_theme["font_size"],
                     block_highlight_text_color= colors[0],
-                    highlight_method = "line",
+                    highlight_method = "block",
+                    disable_drag = True,
+                    hide_unused = True,
                     this_current_screen_border = colors[1],
                     highlight_color = colors[1],
                     inactive= colors[1]),
@@ -187,14 +193,14 @@ screens = [
                 widget.TextBox(
                        text='',
                        background = "#f9bc02",
-                       foreground = "#0484ce",
+                       foreground = "#5294e2",
                        padding = 0,
                        fontsize = 57
                        ),
-                widget.CurrentLayout(background = "#0484ce",fontsize=main_theme["font_size"],foreground=colors[0]),
+                widget.CurrentLayout(background = "#5294e2",fontsize=main_theme["font_size"],foreground=colors[0]),
                 widget.TextBox(
                        text='',
-                       background = "#0484ce",
+                       background = "#5294e2",
                        foreground = "d84404",
                        padding = 0,
                        fontsize = 57
@@ -222,26 +228,28 @@ screens = [
                        padding = 0,
                        fontsize = 57
                        ),
-                widget.CheckUpdates(
+                widget.Net(
                     background= "#0ad39a",
-                    update_interval= 1800,
-                    fontsize=main_theme["font_size"],
-                    distro="Arch_checkupdates",
-                    colour_have_updates=colors[0],
-                    colour_no_updates=colors[0],
-                    no_update_string="UP TO DATE"),
+                    foreground = colors[0],
+                    format = "  {down} ↓↑ {up}",
+                    fontsize=main_theme["font_size"]
+                ),
                 widget.TextBox(
-                       text='',
-                       background = "#0ad39a",
-                       foreground = "#2caa30",
-                       padding = 0,
-                       fontsize = 57
+                    text='',
+                    background = "#0ad39a",
+                    foreground = "#2caa30",
+                    padding = 0,
+                    fontsize = 57,
+                    opacity = 0
+
                        ),
-                widget.Clock(format=' %d/%m/%Y %a %I:%M %p',fontsize=main_theme["font_size"],background = "#2caa30",foreground=colors[0]),
+                widget.Clock(format=' %d/%m/%Y %a %I:%M %p',fontsize=main_theme["font_size"],
+                        background = "#2caa30",foreground=colors[0]),
+                # widget.Systray()
             ],
             main_theme["bar_height"],
-            margin= main_theme["margin"],
-            opacity = 1 
+            margin= main_theme["bar_margin"],
+            opacity = 1
         ),
     ),
 ]
@@ -269,6 +277,7 @@ floating_layout = layout.Floating(float_rules=[
     Match(wm_class='ssh-askpass'),  # ssh-askpass
     Match(title='branchdialog'),  # gitk
     Match(title='pinentry'),  # GPG key password entry
+    Match(wm_class='pinentry-gtk-2'),  # GPG key password entry
 ])
 auto_fullscreen = True
 focus_on_window_activation = "smart"

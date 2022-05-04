@@ -23,7 +23,9 @@ Plug 'https://github.com/preservim/tagbar' " Tagbar for code navigation
 Plug 'https://github.com/preservim/nerdtree' " NerdTree
 Plug 'https://github.com/tpope/vim-commentary' " For Commenting use: gcc & gc
 Plug 'https://github.com/vim-airline/vim-airline' " Status bar
+Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
 call plug#end()
+
 "ctrl + F toggle nerdtree
 nmap <C-f> :NERDTreeToggle <CR>
 nmap <C-l> :terminal <CR>
@@ -37,8 +39,23 @@ if (has("termguicolors"))
 endif
 syntax enable
 colorscheme tender
-" set lighline theme inside lightline config
+""set lightline theme inside lightline config
 let g:lightline = { 'colorscheme': 'tender' }
+
+"transparent bg
+hi Normal guibg=NONE ctermbg=NONE
+"TokioNight 
+" let g:tokyonight_style = "storm"
+" let g:tokyonight_italic_functions = 1
+" let g:tokyonight_sidebars = [ "qf", "vista_kind", "terminal", "packer" ]
+
+" " Change the "hint" color to the "orange" color, and make the "error" color bright red
+" let g:tokyonight_colors = {
+"   \ 'hint': 'orange',
+"   \ 'error': '#ff0000'
+" \ }
+" colorscheme tokyonight
+
 " use <tab> for trigger completion and navigate to the next complete item
 function! s:check_back_space() abort
   let col = col('.') - 1
