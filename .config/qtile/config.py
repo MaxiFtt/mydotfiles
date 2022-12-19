@@ -92,7 +92,7 @@ keys = [
 colors = [["#383c4a", "#383c4a"], # panel background
           ["#5294e2", "#5294e2"], # background for current screen tab
           ["#ffffff", "#ffffff"], # font color for group names
-          ["#f55f5f", "#f55f5f"], # border line color for current tab f55f5f 
+          ["#7c818c", "#7c818c"], # border line color for current tab f55f5f
           ["#74438f", "#74438f"], # border line color for 'other tabs' and color for 'odd widgets'
           ["#4f76c7","#4f76c7"], # color for the 'even widgets'
           ["#e1acff","#e1acff"], # window name
@@ -121,9 +121,9 @@ main_theme = {
 layouts = [
     layout.Columns(border_focus="#D6573C", border_normal="#7a4a24", border_width= main_theme["b_width"],margin= main_theme["margin"]),
     layout.Max(),
-    # layout.Floating(),
+    layout.Floating(),
     # Try more layouts by unleashing below layouts.
-    # layout.Stack(num_stacks=2),
+    #layout.Stack(num_stacks=2),
     # layout.Bsp(),
     #layout.Matrix(border_focus="#D6573C", border_normal="#7a4a24",columns=2,border_width=4,margin=4),
     #layout.MonadTall(),
@@ -151,20 +151,18 @@ extension_defaults = widget_defaults.copy()
 
 screens = [
     Screen(
-        # wallpaper= main_theme["background"],
-        # wallpaper_mode="fill",
         top=bar.Bar(
             [
                 widget.GroupBox(
                     background = colors[0],
                     foreground = colors[2],
                     fontsize = main_theme["font_size"],
-                    block_highlight_text_color= colors[0],
-                    highlight_method = "block",
+                    block_highlight_text_color= colors[1],
+                    highlight_method = "line",
                     disable_drag = True,
                     hide_unused = True,
                     this_current_screen_border = colors[1],
-                    highlight_color = colors[1],
+                    highlight_color = colors[0],
                     inactive= colors[1]),
                 widget.Prompt(
                     background=colors[3],
@@ -201,6 +199,120 @@ screens = [
                 widget.TextBox(
                        text='',
                        background = "#5294e2",
+                       foreground = "d84404",
+                       padding = 0,
+                       fontsize = 57
+                       ),
+                widget.CPU(background = "d84404",
+                           foreground=colors[0],
+                           fontsize=main_theme["font_size"],
+                           format=" {freq_current}GHz {load_percent}%"),
+                widget.TextBox(
+                       text='',
+                       background = "d84404",
+                       foreground = "#add802",
+                       padding = 0,
+                       fontsize = 57
+                       ),
+                widget.Battery(background= "#add802",fontsize=main_theme["font_size"],
+                               foreground=colors[0],
+                               charge_char="",
+                               discharge_char="",
+                               unknown_char=""),
+                widget.TextBox(
+                       text='',
+                       background = "#add802",
+                       foreground = "#0ad39a",
+                       padding = 0,
+                       fontsize = 57
+                       ),
+                widget.Net(
+                    background= "#0ad39a",
+                    foreground = colors[0],
+                    format = "  {down} ↓↑ {up}",
+                    fontsize=main_theme["font_size"]
+                ),
+                widget.TextBox(
+                    text='',
+                    background = "#0ad39a",
+                    foreground = "#2caa30",
+                    padding = 0,
+                    fontsize = 57,
+                    opacity = 0
+
+                       ),
+                widget.Clock(format=' %d/%m/%Y %a %I:%M %p',fontsize=main_theme["font_size"],
+                        background = "#2caa30",foreground=colors[0]),
+                # widget.Systray()
+            ],
+            main_theme["bar_height"],
+            margin= main_theme["bar_margin"],
+            opacity = 1
+        ),
+    ),
+    Screen(
+        # wallpaper= main_theme["background"],
+        # wallpaper_mode="fill",
+        top=bar.Bar(
+            [
+                widget.GroupBox(
+                    background = colors[0],
+                    foreground = colors[2],
+                    fontsize = main_theme["font_size"],
+                    block_highlight_text_color= colors[1],
+                    highlight_method = "line",
+                    disable_drag = True,
+                    hide_unused = True,
+                    this_current_screen_border = colors[1],
+                    highlight_color = colors[0],
+                    inactive= colors[1]),
+                widget.Prompt(
+                    background=colors[3],
+                    fontsize = main_theme["font_size"]),
+                widget.WindowName(
+                    background=colors[0],
+                    fontsize=main_theme["font_size"]),
+                widget.Chord(
+                    chords_colors={
+                        'launch': ("#ff0000", "#ffffff"),
+                    },
+                    name_transform=lambda name: name.upper(),
+                ),
+                widget.TextBox(
+                       text='',
+                       background = colors[0],
+                       foreground = "#f9bc02",
+                       padding = 0,
+                       fontsize = 57
+                       ),
+                widget.CryptoTicker(background = "#f9bc02",
+                                    foreground=colors[0],
+                                    fontsize=main_theme["font_size"],
+                                    format=" : {symbol}{amount:.2f}",
+                                    update_interval = 1800),
+                widget.TextBox(
+                       text='',
+                       background = "#f9bc02",
+                       foreground = "#5294e2",
+                       padding = 0,
+                       fontsize = 57
+                       ),
+                widget.CurrentLayout(background = "#5294e2",fontsize=main_theme["font_size"],foreground=colors[0]),
+                widget.TextBox(
+                       text='',
+                       background = "#5294e2",
+                       foreground = colors[3],
+                       padding = 0,
+                       fontsize = 57
+                       ),
+                widget.PulseVolume(
+                    background= colors[3],
+                    foreground = colors[0],
+                    fontsize=main_theme["font_size"]
+                ),
+                widget.TextBox(
+                       text='',
+                       background = colors[3],
                        foreground = "d84404",
                        padding = 0,
                        fontsize = 57
